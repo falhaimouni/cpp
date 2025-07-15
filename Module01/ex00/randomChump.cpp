@@ -1,5 +1,4 @@
 #include "Zombie.hpp"
-#include "string.h"
 
 void randomChump( std::string name)
 {
