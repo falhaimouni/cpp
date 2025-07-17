@@ -1,10 +1,7 @@
 CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-NAME = weapon
-SRCS = main.cpp \
-	   Weapon.cpp \
-	   HumanA.cpp \
-	   HumanB.cpp
+NAME = losers
+SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
