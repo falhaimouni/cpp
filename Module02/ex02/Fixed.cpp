@@ -14,7 +14,7 @@ Fixed::Fixed(const float floatValue)
 
 Fixed::Fixed(const Fixed &other)
 {
-    *this = other;
+    value = other.value;
 }
 
 Fixed::~Fixed() {}
@@ -76,9 +76,7 @@ int Fixed::toInt() const
 
 Fixed& Fixed::min(Fixed &a, Fixed &b)
 {
-    if (a < b)
-        return (a);
-    return(b);
+    return(a < b) ? a : b;
 }
 
 const Fixed& Fixed::min(const Fixed &a, const Fixed &b)

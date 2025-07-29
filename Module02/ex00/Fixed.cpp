@@ -11,14 +11,15 @@ Fixed::Fixed(const Fixed &other)
     std::cout << "Copy constructor called" << std::endl;
 }
 
+// copy assignment operator 
 Fixed& Fixed::operator=(const Fixed &other)
 {
-    if (this != &other)
+    if (this != &other) //this checks if the object not assigning itself.
     {
         value = other.value;
         std::cout << "Copy assignment operator called" << std::endl;
     }
-    return *this;
+    return *this; //returns the refernce for an object.
 }
 
 Fixed::~Fixed()

@@ -38,11 +38,15 @@ void Fixed::setRawBits(int raw)
     std::cout << "setRawBits member function called" << std::endl;
 }
 
+// val << 8 = val × 256 
 Fixed::Fixed(const int val) : value(val << fractionalBits)
 {
     std::cout << "Int constructor called" << std::endl;
 }
 
+// takes the value Multiplies it by 256 (i.e., 1 << 8)
+// Rounds the result
+// Stores it in value
 Fixed::Fixed(const float val) : value(roundf(val * (1 << fractionalBits)))
 {
     std::cout << "Float constructor called" << std::endl;
@@ -57,7 +61,9 @@ int Fixed::toInt() const
 {
     return value >> fractionalBits;
 }
-
+//operation overloading 
+//allows you to print fixed objects using cout 
+//Automatically converts the fixed-point value to a float before printing
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
 {
     os << fixed.toFloat();
