@@ -38,13 +38,13 @@ Fixed Fixed::operator-(const Fixed &other) const { return Fixed(this->toFloat() 
 Fixed Fixed::operator*(const Fixed &other) const { return Fixed(this->toFloat() * other.toFloat()); }
 Fixed Fixed::operator/(const Fixed &other) const { return Fixed(this->toFloat() / other.toFloat()); }
 
-Fixed& Fixed::operator++()
+Fixed& Fixed::operator++()//pre fix
 {
     value++;
     return *this;
 }
 
-Fixed Fixed::operator++(int)
+Fixed Fixed::operator++(int)//post fix
 {
     Fixed tmp = *this;
     ++(*this);
@@ -76,22 +76,34 @@ int Fixed::toInt() const
 
 Fixed& Fixed::min(Fixed &a, Fixed &b)
 {
-    return(a < b) ? a : b;
+    if (a < b)
+        return a;
+    else
+        return b;
 }
 
 const Fixed& Fixed::min(const Fixed &a, const Fixed &b)
 {
-    return (a < b) ? a : b;
+    if (a < b)
+        return a;
+    else
+        return b;
 }
 
 Fixed& Fixed::max(Fixed &a, Fixed &b)
 {
-    return (a > b) ? a : b;
+    if (a > b)
+        return a;
+    else
+        return b;
 }
 
 const Fixed& Fixed::max(const Fixed &a, const Fixed &b)
 {
-    return (a > b) ? a : b;
+    if (a > b)
+        return a;
+    else
+        return b;
 }
 
 std::ostream& operator<<(std::ostream &out, const Fixed &fixed)

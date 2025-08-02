@@ -26,18 +26,6 @@ Fixed::~Fixed()
     std::cout << "Destructor called" << std::endl;
 }
 
-int Fixed::getRawBits() const
-{
-    std::cout << "getRawBits member function called" << std::endl;
-    return value;
-}
-
-void Fixed::setRawBits(int raw)
-{
-    value = raw;
-    std::cout << "setRawBits member function called" << std::endl;
-}
-
 // val << 8 = val × 256 
 Fixed::Fixed(const int val) : value(val << fractionalBits)
 {

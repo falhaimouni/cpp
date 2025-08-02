@@ -1,21 +1,22 @@
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
-int main()
-{
-    FragTrap a("Alpha");
-    a.attack("enemy");
-    a.takeDamage(40);
-    a.beRepaired(30);
-    a.highFivesGuys();
+int main() {
+    std::cout << "---- Creating DiamondTrap ----" << std::endl;
+    DiamondTrap dt("Shiny");
 
-    std::cout << "--- Copy Constructor Test ---" << std::endl;
-    FragTrap b(a);
+    std::cout << "\n---- Using DiamondTrap Methods ----" << std::endl;
+    dt.attack("EnemyBot");      // from ScavTrap
+    dt.highFivesGuys();         // from FragTrap
+    dt.guardGate();             // from ScavTrap
+    dt.whoAmI();                // from DiamondTrap
 
-    std::cout << "--- Assignment Operator Test ---" << std::endl;
-    FragTrap c;
-    c = a;
+    std::cout << "\n---- Copy Constructor Test ----" << std::endl;
+    DiamondTrap copy(dt);
 
-    std::cout << "--- Destruction ---" << std::endl;
+    std::cout << "\n---- Assignment Operator Test ----" << std::endl;
+    DiamondTrap assigned;
+    assigned = dt;
+
+    std::cout << "\n---- Destruction ----" << std::endl;
     return 0;
 }
-
