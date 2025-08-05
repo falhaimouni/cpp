@@ -1,0 +1,109 @@
+
+
+Module 04 of the C++ 42 curriculum introduces a critical set of Object-Oriented Programming (OOP) concepts that are essential for writing reusable, maintainable, and extensible code in C++. The key focus areas include polymorphism, virtual functions, abstract classes, interfaces, deep copy vs shallow copy, and memory management (including the Rule of Three). This guide explains each topic in depth with examples and practical reasoning.
+
+
+Main topics:
+
+- Polymorphism :
+    1. The ability to treat derived class objects as objects of a 
+       base class.
+    2. Enables dynamic behavior (runtime method binding).
+    3. key tool 'virtual' functions .
+
+- Virtual Functions :
+    1. Declared in the base class.
+    2. Overridden in derived classes.
+    3. Used for dynamic disopatch (decides at runtime which
+       function to call).
+
+- Abstract Classes & Pure Virtual Functions :
+    1. Abstract class = a class with at least one '= 0' function.
+    2. Can’t instantiate abstract classes.
+    3. Used to force derived classes to implement specific
+       behaviour.
+
+- Interfaces(C++ Style) :
+    1. Simulated using abstract classes with only pure virtual
+       functions .
+    2. No attributes or implementation , just a contract.
+
+- Object Slicing :
+    1. Happens when you assign a derived class object to a base
+       class by value.
+    2. You lose the derived part.
+    3. Always use pointers or interfaces for polymorphism.
+
+- Memory Managment :
+    1. If you use 'new' , you must use 'delete'.
+    2. Avoid memory leaks.
+    3. Use desructors properly.
+    4. Use 'virtual ~Destructors()' in base class to ensure
+       proper cleanup.
+
+- Deep Copy vs Shallow Copy :
+    1. Important when your class uses pointers. 
+    2. Shallow copy copies the pointers only.
+    3. Deep copy duplicates the actual data.
+    4. Essintial to implement :
+        . Copy constructor.
+        . Copy assignment operator.
+        . Destructor.
+
+
+--------------------------------------------------------
+
+. Interface is a type of Abstract Class 
+- Abstract Class
+A class that has at least one pure virtual function.
+Can have:
+    . Member variables
+    . Implemented functions
+    . Constructors and destructors
+
+- Interface (C++-style)
+Is a special kind of abstact class.
+Has:
+    . Only pure virtual functions.
+Not have:
+    . Member variables.
+    . Implemented methods (ideally).
+    . Constructors that do anything.
+
+--------------------------------------------------------
+
+<< Deep copy and shallow copy >>
+
+- Shallow Copy :
+    copies only the pointer address , NOT the data its points to.
+example →
+-----------
+    class Dog {
+    private:
+        Brain* brain;
+    public:
+        Dog(const Dog& other)
+        {
+        brain = other.brain; // ❌ shallow copy!
+        }
+};
+-----------
+
+the problem here is that both obj1 and obj2 now pointes to
+the same Brain in memory .
+so if you modify obj2 it will affects obj1.
+and if both are deleted , delete brain will run twice  → crash .
+
+
+- Deep Copy :
+    copies the data the pointer points to . allocates new memory and duplicate the contents .
+example →
+-----------
+Dog::Dog(const Dog& other) {
+    brain = new Brain(*other.brain); // ✅ deep copy
+}
+-----------
+
+obj1 and obj2 have seperate Brain objects.
+Modifying one will NOT affect the other.
+Deleting one does NOT impact other.

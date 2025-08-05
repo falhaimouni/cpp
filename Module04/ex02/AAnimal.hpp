@@ -1,5 +1,5 @@
-#ifndef ANIMAL_HPP
-#define ANIMAL_HPP
+#ifndef AANIMAL_HPP
+#define AANIMAL_HPP
 
 #include <iostream>
 #include <string>
@@ -12,11 +12,10 @@ public:
     Animal();
     Animal(const Animal &other);
     Animal &operator=(const Animal &other);
-    virtual ~Animal();
+    virtual ~Animal(); // Declare virtual destructor for proper cleanup of derived classes
 
     std::string	getType() const;
-    virtual void makeSound() const;
+    virtual void makeSound() const = 0;
 };
-// Declare makeSound as virtual to allow polymorphic behavior
 
 #endif

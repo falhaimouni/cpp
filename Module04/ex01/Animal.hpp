@@ -12,7 +12,7 @@ public:
     Animal();
     Animal(const Animal &other);
     Animal &operator=(const Animal &other);
-    virtual ~Animal();
+    virtual ~Animal(); // Declare virtual destructor for proper cleanup of derived classes
 
     std::string	getType() const;
     virtual void makeSound() const;
