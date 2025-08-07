@@ -2,13 +2,6 @@ CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 NAME = Animals
 SRCS = main.cpp \
-		Cat.cpp \
-		Dog.cpp \
-		Brain.cpp \
-		Animal.cpp \
-		WrongAnimal.cpp \
-		WrongCat.cpp \
-		
 
 OBJS = $(SRCS:%.cpp=objs/%.o)
 

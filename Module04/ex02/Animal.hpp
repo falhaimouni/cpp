@@ -1,5 +1,5 @@
-#ifndef AANIMAL_HPP
-#define AANIMAL_HPP
+#ifndef ANIMAL_HPP
+#define ANIMAL_HPP
 
 #include <iostream>
 #include <string>
@@ -15,7 +15,8 @@ public:
     virtual ~Animal(); // Declare virtual destructor for proper cleanup of derived classes
 
     std::string	getType() const;
-    virtual void makeSound() const = 0;
+    virtual void makeSound() const = 0; // Declare makeSound as a pure virtual function to make Animal an abstract class
 };
+// Declare makeSound as virtual to allow polymorphic behavior
 
 #endif

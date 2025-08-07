@@ -33,3 +33,20 @@ void Dog::makeSound()const
 Brain* Dog::getBrain() const {
     return brain;
 }
+
+void Dog::setIdea(int index, const std::string& idea)
+{
+    if (brain)
+    {
+        brain->setIdea(index, idea);
+    }
+}
+
+std::string Dog::getIdea(int index) const
+{
+    if (brain)
+    {
+        return brain->getIdea(index);
+    }
+    return "";
+}

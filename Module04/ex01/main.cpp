@@ -4,33 +4,34 @@
 #include <iostream>
 
 int main() {
-    std::cout << "=== Creating a Dog and a Cat ===" << std::endl;
-    const Animal* dog = new Dog();
-    const Animal* cat = new Cat();
+    const int SIZE = 2;
+    Animal* animals[SIZE];
 
-    std::cout << "\n=== Making Sounds ===" << std::endl;
-    dog->makeSound();  // Should bark
-    cat->makeSound();  // Should meow
+    // Fill half with Dogs, half with Cats
+    for (int i = 0; i < SIZE; ++i) {
+        if (i < SIZE / 2)
+            animals[i] = new Dog();
+        else
+            animals[i] = new Cat();
+    }
 
-    std::cout << "\n=== Deleting Dog and Cat ===" << std::endl;
-    delete dog;
-    delete cat;
-
-    std::cout << "\n=== Deep Copy Test ===" << std::endl;
+    std::cout << "\n--- Testing deep copy ---\n";
     Dog originalDog;
-    originalDog.getBrain()->setIdea(0, "Protect the house");
-    
-    Dog copiedDog = originalDog; // Copy constructor
+    originalDog.setIdea(0, "Chase the cat!");
+    Dog copiedDog = originalDog;  // Calls copy constructor
 
-    std::cout << "Original Dog's Idea: " << originalDog.getBrain()->getIdea(0) << std::endl;
-    std::cout << "Copied Dog's Idea:   " << copiedDog.getBrain()->getIdea(0) << std::endl;
+    std::cout << "Original Dog Idea: " << originalDog.getIdea(0) << std::endl;
+    std::cout << "Copied Dog Idea:   " << copiedDog.getIdea(0) << std::endl;
 
-    // Change idea in copied dog
-    copiedDog.getBrain()->setIdea(0, "Eat food");
+    originalDog.setIdea(0, "Eat a bone.");
+    std::cout << "After changing original:\n";
+    std::cout << "Original Dog Idea: " << originalDog.getIdea(0) << std::endl;
+    std::cout << "Copied Dog Idea:   " << copiedDog.getIdea(0) << std::endl;
 
-    std::cout << "\nAfter modifying copied dog's idea:" << std::endl;
-    std::cout << "Original Dog's Idea: " << originalDog.getBrain()->getIdea(0) << std::endl;
-    std::cout << "Copied Dog's Idea:   " << copiedDog.getBrain()->getIdea(0) << std::endl;
+    std::cout << "\n--- Cleaning up ---\n";
+    for (int i = 0; i < SIZE; ++i) {
+        delete animals[i];  // Should call Dog/Cat -> Animal -> Brain destructors
+    }
 
     return 0;
 }
