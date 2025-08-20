@@ -1,8 +1,7 @@
 CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-NAME = Animals
-SRCS = main.cpp \
-
+NAME =  Bureaucrat
+SRCS = main.cpp  Bureaucrat.cpp
 OBJS = $(SRCS:%.cpp=objs/%.o)
 
 all: $(NAME)
@@ -10,7 +9,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
-# Rule to compile .cpp into objs/.o
 objs/%.o: %.cpp
 	@mkdir -p objs
 	$(CXX) $(CXXFLAGS) -c $< -o $@

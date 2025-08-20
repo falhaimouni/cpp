@@ -1,0 +1,53 @@
+C++ Module 05 – Repetition and Exceptions
+
+It’s the fifth module in the C++ sequence,
+ and its main purpose is to make you practice everything you
+learned so far (classes, inheritance, canonical form, operator overloading, etc.),
+but now with a new concept: Exceptions.
+
+
+Main topics:
+
+- Exeptions :
+    1. How to throw exceptions with 'throw'.
+    2. How to handle them with 'try / catch'.
+    3. How to create your own exeption classes.
+
+- Repetation of Class design :
+    1. Orthodox Canonical Form .
+    2. operator overloading for priniting objects.
+
+- Abstract Classes & Inheritance :
+    1. Designing an abstract base class.
+    2. Creating multiple derived Classes.
+
+- Polymorphism & Dynamic Allocation 
+    1. Using base class pointers to execute different form type.
+    2. checking execution permissions and handling errors via
+       exceptions.
+
+
+---------------------------------------------------------------
+
+- Exeptions :
+
+What is Exeptions ??
+- Exeptions are C++’s way of handling errors or unexpected situations.
+Instead of crashing or returning an error code
+, you can throw an exception and catch it somewhere else in the program.
+
+Common runtime errors :
+    1. Dividing by zero.
+    2. Accessing out-of-bounds array elements.
+    3. Using deleted memory.
+so diffrent types if errors canoccur while running a program
+such as coding mistakes , invalid input , or unexpected situations.
+Exceptions handling lets you catch and handle errors during runtime.
+
+We use three keywords :
+. try - defines the code to test.
+. throw - triggers an exceptions.
+. catch - handles the error.
+
+the (...) in catch block is to handle any type of 
+exceptions. 
