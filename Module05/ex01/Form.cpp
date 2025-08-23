@@ -38,7 +38,6 @@ Form::~Form()
     std::cout << "Form destructor called.\n";
 }
 
-// ===== Exceptions =====
 const char* Form::GradeTooHighException::what() const throw()
 {
     return "Form: Grade is too high!";
