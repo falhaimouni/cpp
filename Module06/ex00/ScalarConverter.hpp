@@ -7,10 +7,12 @@
 #include <cmath>
 #include <iomanip>
 #include <cctype>
+#include <sstream>
+#include <cstdlib>
 
 class ScalarConverter {
 private:
-    ScalarConverter(); // Private constructor
+    ScalarConverter();
     ScalarConverter(const ScalarConverter&);
     ScalarConverter& operator=(const ScalarConverter&);
     ~ScalarConverter();
