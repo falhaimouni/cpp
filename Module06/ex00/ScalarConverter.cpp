@@ -13,7 +13,7 @@ ScalarConverter::ScalarConverter(const ScalarConverter&)
 ScalarConverter& ScalarConverter::operator=(const ScalarConverter&)
 {
     std::cout << "ScalarConverter assignment operator called" << std::endl;
-    return *this;
+    return (*this);
 }
 
 ScalarConverter::~ScalarConverter()
@@ -95,7 +95,7 @@ void ScalarConverter::printDouble(double d)
 
 bool ScalarConverter::isCharLiteral(const std::string& str)
 {
-    return str.length() == 1 && !isdigit(str[0]);
+    return (str.length() == 1 && !isdigit(str[0]));
 }
 
 bool ScalarConverter::isInt(const std::string& str)
@@ -103,31 +103,31 @@ bool ScalarConverter::isInt(const std::string& str)
     std::stringstream ss(str);
     int i;
     ss >> i;
-    return !ss.fail() && ss.eof();
+    return (!ss.fail() && ss.eof());
 }
 
 bool ScalarConverter::isFloat(const std::string& str)
 {
     if (str == "nanf" || str == "+inff" || str == "-inff")
-        return true;
+        return (true);
     if (str[str.length() - 1] != 'f')
-        return false;
+        return (false);
     std::string numPart = str.substr(0, str.length() - 1);
     std::stringstream ss(numPart);
     float f;
     ss >> f;
-    return !ss.fail() && ss.eof();
+    return (!ss.fail() && ss.eof());
 }
 
 bool ScalarConverter::isDouble(const std::string& str)
 {
     if (str == "nan" || str == "+inf" || str == "-inf")
-        return true;
+        return (true);
 
     std::stringstream ss(str);
     double d;
     ss >> d;
-    return !ss.fail() && ss.eof();
+    return (!ss.fail() && ss.eof());
 }
 
 void ScalarConverter::convert(const std::string& str)
@@ -182,7 +182,10 @@ void ScalarConverter::convert(const std::string& str)
             std::cout << "float: " << str << std::endl;
         else
             std::cout << "float: " << str << "f" << std::endl;
-        std::cout << "double: " << (str[str.length() - 1] == 'f' ? str.substr(0, str.length() - 1) : str) << std::endl;
+        if (str[str.length() - 1] == 'f')
+            std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
+        else
+            std::cout << "double: " << str << std::endl;
         return;
     }
     printChar(value);
