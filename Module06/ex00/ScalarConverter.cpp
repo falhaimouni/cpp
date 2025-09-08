@@ -5,13 +5,15 @@ ScalarConverter::ScalarConverter()
     std::cout << "ScalarConverter constructor called" << std::endl;
 }
 
-ScalarConverter::ScalarConverter(const ScalarConverter&)
+ScalarConverter::ScalarConverter(const ScalarConverter& other)
 {
+    (void)other;
     std::cout << "ScalarConverter copy constructor called" << std::endl;
 }
 
-ScalarConverter& ScalarConverter::operator=(const ScalarConverter&)
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
 {
+    (void)other;
     std::cout << "ScalarConverter assignment operator called" << std::endl;
     return (*this);
 }
