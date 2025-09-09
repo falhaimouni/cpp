@@ -1,6 +1,6 @@
 CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-NAME =  iter
+NAME =  array
 SRCS = main.cpp
 OBJS = $(SRCS:%.cpp=objs/%.o)
 
