@@ -60,28 +60,3 @@ int main()
 }
 
 
-// int main() {
-//     // Test 1: int array - modify elements
-//     int intArray[] = {1, 2, 3, 4, 5};
-//     size_t intSize = sizeof(intArray) / sizeof(intArray[0]);
-
-//     std::cout << "Original intArray: ";
-//     ::iter(intArray, intSize, printElement<int>);
-//     std::cout << std::endl;
-
-//     iter(intArray, intSize, incrementElement<int>);  // Increment all elements
-
-//     std::cout << "After increment: ";
-//     ::iter(intArray, intSize, printElement<int>);
-//     std::cout << std::endl;
-
-//     // Test 2: const char* array - print only (const elements)
-//     const char* strArray[] = {"Hello", "World", "!"};
-//     size_t strSize = sizeof(strArray) / sizeof(strArray[0]);
-
-//     std::cout << "String array: ";
-//     ::iter(strArray, strSize, printElement<const char*>);
-//     std::cout << std::endl;
-
-//     return 0;
-// }
