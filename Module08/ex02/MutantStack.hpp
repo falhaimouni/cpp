@@ -5,8 +5,6 @@
 #include <stack>
 #include <deque>
 #include <iterator>
-#include <algorithm>
-#include <stdexcept>
 
 template <typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container>
