@@ -1,27 +1,9 @@
 #include "ScalarConverter.hpp"
 
-ScalarConverter::ScalarConverter()
-{
-    std::cout << "ScalarConverter constructor called" << std::endl;
-}
-
-ScalarConverter::ScalarConverter(const ScalarConverter& other)
-{
-    (void)other;
-    std::cout << "ScalarConverter copy constructor called" << std::endl;
-}
-
-ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
-{
-    (void)other;
-    std::cout << "ScalarConverter assignment operator called" << std::endl;
-    return (*this);
-}
-
-ScalarConverter::~ScalarConverter()
-{
-    std::cout << "ScalarConverter destructor called" << std::endl;
-}
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::ScalarConverter(const ScalarConverter& other) { (void)other; }
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other) { (void)other; return *this; }
+ScalarConverter::~ScalarConverter() {}
 
 void ScalarConverter::printChar(double d)
 {
@@ -49,12 +31,7 @@ void ScalarConverter::printFloat(double d)
     if (std::isnan(f))
         std::cout << "nanf";
     else if (std::isinf(f))
-    {
-        if (f < 0)
-            std::cout << "-inff";
-        else
-            std::cout << "+inff";
-    }
+        std::cout << (f < 0 ? "-inff" : "+inff");
     else
     {
         std::ostringstream oss;
@@ -68,19 +45,13 @@ void ScalarConverter::printFloat(double d)
     std::cout << std::endl;
 }
 
-
 void ScalarConverter::printDouble(double d)
 {
     std::cout << "double: ";
     if (std::isnan(d))
         std::cout << "nan";
     else if (std::isinf(d))
-    {
-        if (d < 0)
-            std::cout << "-inf";
-        else
-            std::cout << "+inf";
-    }
+        std::cout << (d < 0 ? "-inf" : "+inf");
     else
     {
         std::ostringstream oss;
@@ -88,12 +59,10 @@ void ScalarConverter::printDouble(double d)
         std::string result = oss.str();
         if (result.find('.') == std::string::npos && result.find('e') == std::string::npos)
             result += ".0";
-
         std::cout << result;
     }
     std::cout << std::endl;
 }
-
 
 bool ScalarConverter::isCharLiteral(const std::string& str)
 {
@@ -111,9 +80,10 @@ bool ScalarConverter::isInt(const std::string& str)
 bool ScalarConverter::isFloat(const std::string& str)
 {
     if (str == "nanf" || str == "+inff" || str == "-inff")
-        return (true);
-    if (str[str.length() - 1] != 'f')
-        return (false);
+        return true;
+    if (str.empty() || str[str.length() - 1] != 'f')
+        return false;
+
     std::string numPart = str.substr(0, str.length() - 1);
     std::stringstream ss(numPart);
     float f;
@@ -124,7 +94,7 @@ bool ScalarConverter::isFloat(const std::string& str)
 bool ScalarConverter::isDouble(const std::string& str)
 {
     if (str == "nan" || str == "+inf" || str == "-inf")
-        return (true);
+        return true;
 
     std::stringstream ss(str);
     double d;
@@ -135,6 +105,11 @@ bool ScalarConverter::isDouble(const std::string& str)
 void ScalarConverter::convert(const std::string& str)
 {
     double value = 0.0;
+
+    if (str.empty() || std::isspace(str[0]) || std::isspace(str[str.size() - 1])) {
+        std::cout << "Error: invalid input" << std::endl;
+        return;
+    }
     if (str == "nan" || str == "nanf")
         value = std::numeric_limits<double>::quiet_NaN();
     else if (str == "+inf" || str == "+inff")
@@ -184,15 +159,16 @@ void ScalarConverter::convert(const std::string& str)
             std::cout << "float: " << str << std::endl;
         else
             std::cout << "float: " << str << "f" << std::endl;
+
         if (str[str.length() - 1] == 'f')
             std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
         else
             std::cout << "double: " << str << std::endl;
         return;
     }
+
     printChar(value);
     printInt(value);
     printFloat(value);
     printDouble(value);
 }
-
