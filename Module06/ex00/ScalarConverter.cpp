@@ -106,21 +106,22 @@ void ScalarConverter::convert(const std::string& str)
 {
     double value = 0.0;
 
-    if (str.empty() || std::isspace(str[0]) || std::isspace(str[str.size() - 1])) {
-        std::cout << "Error: invalid input" << std::endl;
+    if (str.empty() || (std::isspace(str[0]) && str.length() != 1)
+        || (std::isspace(str[str.size() - 1]) && str.length() != 1))
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
         return;
     }
+
     if (str == "nan" || str == "nanf")
         value = std::numeric_limits<double>::quiet_NaN();
     else if (str == "+inf" || str == "+inff")
         value = std::numeric_limits<double>::infinity();
     else if (str == "-inf" || str == "-inff")
         value = -std::numeric_limits<double>::infinity();
-    else if (str.empty())
-    {
-        std::cout << "Invalid input: empty string" << std::endl;
-        return;
-    }
     else if (isCharLiteral(str))
         value = static_cast<double>(str[0]);
     else if (isInt(str))
@@ -147,7 +148,10 @@ void ScalarConverter::convert(const std::string& str)
     }
     else
     {
-        std::cout << "Invalid input" << std::endl;
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
         return;
     }
 
@@ -155,15 +159,20 @@ void ScalarConverter::convert(const std::string& str)
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
+
         if (str[str.length() - 1] == 'f')
             std::cout << "float: " << str << std::endl;
         else
             std::cout << "float: " << str << "f" << std::endl;
-
-        if (str[str.length() - 1] == 'f')
+        if (str == "+inff" || str == "-inff" || str == "nanf")
+            std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
+        else if (str == "+inf" || str == "-inf" || str == "nan")
+            std::cout << "double: " << str << std::endl;
+        else if (str[str.length() - 1] == 'f')
             std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
         else
             std::cout << "double: " << str << std::endl;
+
         return;
     }
 

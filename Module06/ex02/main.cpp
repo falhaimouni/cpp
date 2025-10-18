@@ -5,6 +5,8 @@
 
 int main()
 {
+    srand(time(NULL));
+    
     Base* r = generate();
     identify(r);
     identify(*r);

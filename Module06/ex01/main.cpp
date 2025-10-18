@@ -7,14 +7,14 @@ int main()
     data.a = 7;
     data.b = 's';
 
-    std::cout << &data << std::endl;
-    std::cout << data.a << std::endl;
-    std::cout << data.b << std::endl;
+    std::cout << "Original pointer: " << &data << std::endl;
+    std::cout << "Original values: a = " << data.a << ", b = " << data.b << std::endl;
 
     uintptr_t var = Serializer::serialize(&data);
-    Data *data1 = Serializer::deserialize(var);
+    Data* data1 = Serializer::deserialize(var);
 
-    std::cout << &data1 << std::endl;
-    std::cout << data1->a << std::endl;
-    std::cout << data1->b << std::endl;
+    std::cout << "Deserialized pointer: " << data1 << std::endl;
+    std::cout << "Deserialized values: a = " << data1->a << ", b = " << data1->b << std::endl;
+
+    std::cout << "Pointers equal? " << std::boolalpha << (&data == data1) << std::endl;
 }

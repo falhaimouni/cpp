@@ -9,7 +9,6 @@ Base::~Base()
 
 Base * generate(void)
 {
-    srand(time(NULL));
     int r = rand() % 3;
 
     switch (r)
@@ -33,7 +32,7 @@ void identify(Base* p)
     else if (dynamic_cast<C*>(p))
         std::cout << "Pointer : This is C class\n";
     else
-        std::cout << "Pointer : This is Unknowen class\n";
+        std::cout << "Pointer : This is Unknown class\n";
 }
 
 void identify(Base& p)
@@ -59,5 +58,5 @@ void identify(Base& p)
         return ;
     }
     catch (...) {}
-    std::cout << "Reference : This is Unknowen class\n";
+    std::cout << "Reference : This is Unknown class\n";
 }
