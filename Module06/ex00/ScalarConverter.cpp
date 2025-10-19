@@ -160,18 +160,18 @@ void ScalarConverter::convert(const std::string& str)
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
 
-        if (str[str.length() - 1] == 'f')
-            std::cout << "float: " << str << std::endl;
+       if (std::isnan(value))
+            std::cout << "float: nanf" << std::endl;
+        else if (value > 0)
+            std::cout << "float: +inff" << std::endl;
         else
-            std::cout << "float: " << str << "f" << std::endl;
-        if (str == "+inff" || str == "-inff" || str == "nanf")
-            std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
-        else if (str == "+inf" || str == "-inf" || str == "nan")
-            std::cout << "double: " << str << std::endl;
-        else if (str[str.length() - 1] == 'f')
-            std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
+            std::cout << "float: -inff" << std::endl;
+        if (std::isnan(value))
+            std::cout << "double: nan" << std::endl;
+        else if (value > 0)
+            std::cout << "double: +inf" << std::endl;
         else
-            std::cout << "double: " << str << std::endl;
+            std::cout << "double: -inf" << std::endl;
 
         return;
     }
