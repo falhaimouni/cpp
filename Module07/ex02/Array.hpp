@@ -44,6 +44,7 @@ public:
                 arr[i] = other.arr[i];
         }
         return *this;
+
     }
 
     ~Array()
@@ -52,6 +53,13 @@ public:
     }
 
     T &operator[](unsigned int index)
+    {
+        if (index >= size)
+            throw std::out_of_range("Index out of bounds");
+        return arr[index];
+    }
+
+    const T &operator[](unsigned int index) const
     {
         if (index >= size)
             throw std::out_of_range("Index out of bounds");
