@@ -21,14 +21,15 @@ BitcoinExchange::~BitcoinExchange()
 
 std::string trim(const std::string &str)
 {
-    std::string result;
-    for (size_t i = 0; i < str.size(); ++i)
-    {
-        if (str[i] != ' ' && str[i] != '\t')
-            result += str[i];
-    }
-    return (result);
+    size_t start = str.find_first_not_of(" \t");
+    size_t end = str.find_last_not_of(" \t");
+
+    if (start == std::string::npos)
+        return "";
+
+    return str.substr(start, end - start + 1);
 }
+
 
 bool    validDate(const std::string &date)
 {
@@ -51,6 +52,7 @@ bool    validDate(const std::string &date)
         return false;
     if (day < 1)
         return false;
+
     int daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
     bool leap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 
@@ -67,18 +69,15 @@ bool    validDate(const std::string &date)
     return true;
 }
 
+/*
+FIX:
+- validValue should NOT print errors itself
+- validation and error output must be separated
+*/
 bool    validValue(double value)
 {
-    if (value < 0)
-    {
-        std::cout << "Error: not a positive number." << std::endl;
+    if (value < 0 || value > 1000)
         return false;
-    }
-    else if (value > 1000)
-    {
-        std::cout << "Error: too large a number." << std::endl;
-        return false;
-    }
     return true;
 }
 
@@ -86,7 +85,8 @@ bool    openFile(const std::string &fileName, std::map<std::string, double> &bit
 {
     double valueD;
     std::ifstream inputFile(fileName.c_str());
-    if (!inputFile) {
+    if (!inputFile)
+    {
         std::cerr << "Error: could not open file." << std::endl;
         return false;
     }
@@ -94,48 +94,78 @@ bool    openFile(const std::string &fileName, std::map<std::string, double> &bit
     std::string line;
     std::string head;
     std::getline(inputFile, head);
+
+    // FIX: header must match exactly "date | value"
     head = trim(head);
-    if (head != "date|value")
+    if (head != "date | value")
     {
-        std::cout << "Error : not a valid input file." << std::endl;
+        std::cerr << "Error: bad input => " << head << std::endl;
         return false;
     }
+
     while (std::getline(inputFile, line))
     {
         if (line.empty())
             continue;
+
         std::string key;
         std::string value;
         std::stringstream s(line);
         char del = '|';
-        if (!std::getline(s, key, del) || !std::getline(s, value, del))
+
+        if (!std::getline(s, key, del) || !std::getline(s, value))
         {
             std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
+
         key = trim(key);
         value = trim(value);
-        if (!validDate(key)) {
-            std::cerr << "Error: bad date => " << key << std::endl;
+
+        if (!validDate(key))
+        {
+            // FIX: error message must match subject exactly
+            std::cerr << "Error: bad input => " << key << std::endl;
             continue;
         }
+
         std::stringstream valStream(value);
-        if (!(valStream >> valueD)) {
-            std::cerr << "Error: bad value => " << value << std::endl;
+        char extra;
+
+        // FIX: ensure full numeric parsing (reject "1abc")
+        if (!(valStream >> valueD) || (valStream >> extra))
+        {
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
-        if (!validValue(valueD))
+
+        // FIX: correct error messages for value limits
+        if (valueD < 0)
+        {
+            std::cerr << "Error: not a positive number." << std::endl;
             continue;
+        }
+        if (valueD > 1000)
+        {
+            std::cerr << "Error: too large a number." << std::endl;
+            continue;
+        }
+
         std::map<std::string, double>::iterator it = bitCoin.lower_bound(key);
+
         if (it == bitCoin.end() || it->first != key)
         {
-            if (it == bitCoin.begin()) {
-                std::cerr << "Error: no earlier date available for " << key << std::endl;
+            // FIX: if no earlier date exists, must print bad input
+            if (it == bitCoin.begin())
+            {
+                std::cerr << "Error: bad input => " << key << std::endl;
                 continue;
             }
             --it;
         }
-        std::cout << key << " => " << valueD << " = " << (valueD * it->second) << std::endl;
+
+        std::cout << key << " => " << valueD << " = "
+                  << (valueD * it->second) << std::endl;
     }
 
     return true;
@@ -150,18 +180,26 @@ bool    storeData(const std::string &fileName, std::map<std::string, double> &bi
         std::cout << "Error: Cannot open input file\n";
         return false;
     }
+
     std::string line;
     std::string head;
     std::getline(inputFile, head);
+
     while (std::getline(inputFile, line))
     {
+        if (line.empty())
+            continue;
+
         std::string key;
         std::string value;
         std::stringstream s(line);
         char del = ',';
+
         std::getline(s, key, del);
         std::getline(s, value, del);
+
         std::stringstream valStream(value);
+
         // Here i use stringstream instead of atof function because 
         // If the string is not a valid number, atof just returns 0.0
         if (!(valStream >> valueD)) // so here if its not a valid num it will give and error 
@@ -169,6 +207,7 @@ bool    storeData(const std::string &fileName, std::map<std::string, double> &bi
             std::cerr << "Error: bad value in CSV -> " << value << std::endl;
             continue;
         }
+
         bitCoin.insert(std::make_pair(key, valueD));
     }
     return true;
