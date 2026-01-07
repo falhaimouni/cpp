@@ -55,7 +55,6 @@ bool    validDate(const std::string &date)
 
     int daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
     bool leap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-
     if (month == 2 && leap)
     {
         if (day > 29)
@@ -69,11 +68,6 @@ bool    validDate(const std::string &date)
     return true;
 }
 
-/*
-FIX:
-- validValue should NOT print errors itself
-- validation and error output must be separated
-*/
 bool    validValue(double value)
 {
     if (value < 0 || value > 1000)
@@ -81,7 +75,7 @@ bool    validValue(double value)
     return true;
 }
 
-bool    openFile(const std::string &fileName, std::map<std::string, double> &bitCoin)
+bool        openFile(const std::string &fileName, std::map<std::string, double> &bitCoin)
 {
     double valueD;
     std::ifstream inputFile(fileName.c_str());
@@ -95,7 +89,6 @@ bool    openFile(const std::string &fileName, std::map<std::string, double> &bit
     std::string head;
     std::getline(inputFile, head);
 
-    // FIX: header must match exactly "date | value"
     head = trim(head);
     if (head != "date | value")
     {
@@ -124,7 +117,6 @@ bool    openFile(const std::string &fileName, std::map<std::string, double> &bit
 
         if (!validDate(key))
         {
-            // FIX: error message must match subject exactly
             std::cerr << "Error: bad input => " << key << std::endl;
             continue;
         }
@@ -132,14 +124,12 @@ bool    openFile(const std::string &fileName, std::map<std::string, double> &bit
         std::stringstream valStream(value);
         char extra;
 
-        // FIX: ensure full numeric parsing (reject "1abc")
         if (!(valStream >> valueD) || (valStream >> extra))
         {
             std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
 
-        // FIX: correct error messages for value limits
         if (valueD < 0)
         {
             std::cerr << "Error: not a positive number." << std::endl;
@@ -155,7 +145,6 @@ bool    openFile(const std::string &fileName, std::map<std::string, double> &bit
 
         if (it == bitCoin.end() || it->first != key)
         {
-            // FIX: if no earlier date exists, must print bad input
             if (it == bitCoin.begin())
             {
                 std::cerr << "Error: bad input => " << key << std::endl;
@@ -200,9 +189,7 @@ bool    storeData(const std::string &fileName, std::map<std::string, double> &bi
 
         std::stringstream valStream(value);
 
-        // Here i use stringstream instead of atof function because 
-        // If the string is not a valid number, atof just returns 0.0
-        if (!(valStream >> valueD)) // so here if its not a valid num it will give and error 
+        if (!(valStream >> valueD))
         {
             std::cerr << "Error: bad value in CSV -> " << value << std::endl;
             continue;

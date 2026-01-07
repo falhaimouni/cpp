@@ -15,22 +15,27 @@ RPN& RPN::operator=(const RPN& other)
 
 RPN::~RPN(){}
 
-int eval(std::vector<std::string>& A)
+int eval(const std::string& expr)
 {
     std::stack<int> st;
-    for (size_t i = 0; i < A.size(); i++)
+    std::istringstream iss(expr);
+    std::string token;
+    bool sawToken = false;
+
+    while (iss >> token)
     {
-        if (A[i] != "+" && A[i] != "-" && A[i] != "/"
-            && A[i] != "*") {
-            for (size_t j = 0; j < A[i].size(); j++)
+        sawToken = true;
+        if (token != "+" && token != "-" && token != "/"
+            && token != "*") {
+            for (size_t j = 0; j < token.size(); j++)
             {
-                if (!std::isdigit(A[i][j]) && !(j == 0 && A[i][j] == '-'))
+                if (!std::isdigit(token[j]) && !(j == 0 && token[j] == '-'))
                 {
                     std::cerr << "Error" << std::endl;
                     exit(1);
                 }
             }
-            int val = std::atoi(A[i].c_str());
+            int val = std::atoi(token.c_str());
             if (val < -9 || val > 9)
             {
                 std::cerr << "Error" << std::endl;
@@ -51,11 +56,11 @@ int eval(std::vector<std::string>& A)
             int a = st.top();
             st.pop();
 
-            if (A[i] == "+")
+            if (token == "+")
                 st.push(a + b);
-            else if (A[i] == "-")
+            else if (token == "-")
                 st.push(a - b);
-            else if (A[i] == "*")
+            else if (token == "*")
                 st.push(a * b);
             else {
                 if (b == 0)
@@ -66,6 +71,10 @@ int eval(std::vector<std::string>& A)
                 st.push(a / b);
             }
         }
+    }
+    if (!sawToken) {
+        std::cerr << "Error" << std::endl;
+        exit(1);
     }
     if (st.size() != 1) {
         std::cerr << "Error" << std::endl;

@@ -3,12 +3,11 @@
 
 #include <iostream>
 #include <stack>
-#include <cstring>
 #include <cstdlib>
 #include <string>
-#include <vector>
 #include <iterator>
 #include <sstream>
+#include <cctype>
 
 class RPN
 {
@@ -19,7 +18,7 @@ public:
     ~RPN();
 };
 
-int eval(std::vector<std::string>& A);
+int eval(const std::string& expr);
 
 
 #endif
